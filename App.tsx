@@ -1,16 +1,28 @@
 import React from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import styled from 'styled-components/native';
+import { SafeAreaView } from 'react-native';
+import { NativeBaseProvider } from 'native-base';
 import NotesList from './components/notes-list/notes-list.tsx'
+import Colors from './UI/colors'
+
 
 export default function App() {
+  // 2. Use at the root of your app
   return (
-    <View>
-      <NotesList/>
-      <StatusBar style="auto" />
-    </View>
+    <NativeBaseProvider>
+     <Wrapper>
+       <SafeAreaView>
+         <NotesList/>
+         <StatusBar style="auto" />
+       </SafeAreaView>
+       </Wrapper>
+    </NativeBaseProvider>
   );
 }
 
-const Test = styled.Text``;
+
+const Wrapper = styled.View`
+  background: ${Colors.background}
+  height: 100vh;
+`;

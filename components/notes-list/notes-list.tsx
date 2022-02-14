@@ -5,10 +5,16 @@ import Note from './note'
 
 const NotesList = () => {
   return (
-	<SafeAreaView>
+	  <View>
 	  <Text>Hi, I'm a notes list</Text>
- 	 	<Note/>
-	</SafeAreaView>
+ 	 	<Note 
+		  lastTime="3S" 
+		  title="Note title" 
+		  summary="Note summary"
+		  pinned="true"
+		/>
+	  </View>
   )
 }
+
 export default NotesList;
