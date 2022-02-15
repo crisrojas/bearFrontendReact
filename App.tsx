@@ -8,7 +8,6 @@ import Colors from './UI/colors'
 
 
 export default function App() {
-  // 2. Use at the root of your app
   return (
     <NativeBaseProvider>
      <Wrapper>
