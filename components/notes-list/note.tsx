@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableWithoutFeedback  } from 'react-native';
+import { View, TouchableWithoutFeedback, Image, StyleSheet } from 'react-native';
 import styled from "styled-components/native";
 import Colors from "../../UI/colors"
 import { NativeBaseProvider, Box, HStack, VStack} from "native-base";
@@ -12,12 +12,24 @@ interface NoteModel {
 	pinned: Bool
 }
 
+const styles = StyleSheet.create({
+  tinyLogo: {
+	width: 138,
+	height: 85,
+	borderWidth: "1px",
+	borderColor: Colors.separatorColor
+  }
+});
+
+
 const Note = (props) => {
 
 	return (
 		<TouchableWithoutFeedback onPress={props.onPress}>
 			<NoteWrapper
-			isSelected={props.isSelected}>
+			isSelected={props.isSelected}
+			/*style={{ height: "200px"}}*/
+			>
 			
 				  <HStack space={3} justifyContent="left">
 					<VStack space={3}>
@@ -26,9 +38,18 @@ const Note = (props) => {
 						<Text><PinnedIcon/></Text>
 					</VStack>
 					
-					<VStack space={2}>
+					<VStack space={2} style={{ width: "100%" }}>
 						  <Title>{props.title}</Title>
 						  <Text>{props.summary}</Text>
+						  {props.thumbnailUri && 
+							  <Image
+								   style={styles.tinyLogo}
+								   source={{
+									 uri: props.thumbnailUri,
+								   }}
+								 />
+						  }
+						
 						  <Separator></Separator>
 					  </VStack>
 			
@@ -42,11 +63,12 @@ const Note = (props) => {
 export default Note
 
 const Title = styled.Text`
-	font-family: 'AvenirNextLTPro-Bold'
+	font-family: 'Metropolis-Medium';
 	color: ${Colors.titleTextColor}
 `
 
 const Text = styled.Text`
+	font-family: 'AvenirNextLTPro-Regular';
 	color: ${Colors.textBaseColor}
 `
 

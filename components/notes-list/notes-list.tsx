@@ -30,6 +30,7 @@ const NotesList = () => {
 				 summary={item.summary}
 				 pinned={item.pinned}
 				 isSelected={item.id == selectedId}
+				 thumbnailUri={item.thumbnailUri}
 				 
 			 />
 		
@@ -49,6 +50,7 @@ const items = [
 		title: "Note title",
 		summary: "Note summary",
 		pinned: "true",
+		thumbnailUri: "https://www.lesformationstrading.fr/wp-content/uploads/2021/09/bear-bourse.png"
 	},
 	{
 		id: "2",
@@ -63,6 +65,7 @@ const items = [
 		title: "Note title",
 		summary: "Note summary",
 		pinned: "false",
+		thumbnailUri: "https://files.worldwildlife.org/wwfcmsprod/images/Polar_bear_on_ice_in_Svalbard_Norway_WW294883/hero_small/85px6g3dhv_Polar_bear_on_ice_in_Svalbard_Norway_WW294883.jpg"
 	},
 	{
 		id: "4",
