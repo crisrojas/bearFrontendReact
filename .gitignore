@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+pyloncss.css
 
 # macOS
 .DS_Store
