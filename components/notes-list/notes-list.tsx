@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import Note from "./note";
 import Fonts from "../../UI/fonts";
@@ -8,8 +8,14 @@ import Header from "./header";
 import HStack from "../../UI/hstack";
 import VStack from "../../UI/vstack";
 
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.background,
+  },
+});
+
 const NotesList = () => {
-  const [selectedId, setSelectedId] = useState("0");
+  const [selectedId, setSelectedId] = useState(0);
 
   const didSelectNote = () => {
     /* @todo: Fetch & show note content from id */
@@ -20,10 +26,10 @@ const NotesList = () => {
   }, [selectedId]);
 
   return (
-    <ScrollView style={{ height: "100%" }}>
-      {/* <Header length={items.length} /> */}
+    <ScrollView style={styles.container}>
+      <Header length={model.length} />
 
-      {items.map((item, index) => (
+      {model.map((item, index) => (
         <Note
           key={index}
           onPress={() => setSelectedId(item.id)}
@@ -35,71 +41,63 @@ const NotesList = () => {
           thumbnailUri={item.thumbnailUri}
         />
       ))}
+
+      <EmptyView />
     </ScrollView>
   );
 };
 
 export default NotesList;
 
-const items = [
-  {
-    id: "1",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "true",
-    thumbnailUri:
+const setTitleWith = (id) => {
+  if (id % 2 === 0) {
+    return longTitle;
+  } else if (id % 3 === 0) {
+    return reallyLongTitle;
+  } else {
+    return shortTitle;
+  }
+};
+
+const makeSummaryWith = (noteTitle, summary) => {
+  if (noteTitle.length <= 62) {
+    return summary.substring(0, 62);
+  } else {
+    return null;
+  }
+};
+
+const makeThumbnailListWith = (index) => {
+  if (index % 4 === 0) {
+    return [
       "https://www.lesformationstrading.fr/wp-content/uploads/2021/09/bear-bourse.png",
-  },
-  {
-    id: "2",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "true",
-  },
-  {
-    id: "3",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "false",
-    thumbnailUri:
-      "https://files.worldwildlife.org/wwfcmsprod/images/Polar_bear_on_ice_in_Svalbard_Norway_WW294883/hero_small/85px6g3dhv_Polar_bear_on_ice_in_Svalbard_Norway_WW294883.jpg",
-  },
-  {
-    id: "4",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "false",
-  },
-  {
-    id: "5",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "false",
-  },
-  {
-    id: "6",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "false",
-  },
-  {
-    id: "7",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "false",
-  },
-  {
-    id: "8",
-    modifiedSince: "3S",
-    title: "Note title",
-    summary: "Note summary",
-    pinned: "false",
-  },
-];
+      "https://images.squarespace-cdn.com/content/v1/5e768ec11f1ca16b9845e45b/1585108253672-YW6K7ARO8EGJERC8U9UN/_PBR7307.jpg",
+    ];
+  } else {
+    return null;
+  }
+};
+
+const EmptyView = styled.View`
+  height: 30;
+`;
+
+const reallyLongTitle =
+  "This is a really long title that will not fit in three lines. Seariously, this is as long as a jiraffles neck, long.";
+const longTitle =
+  "This is a very long title that will not fit in a single line";
+const shortTitle = "This is a short title";
+
+const summary =
+  "This is the notes summary and it will not fit in two lines so I've to continue writing until that happens, ok?";
+const model = Array.from(new Array(20)).map(function (value, index) {
+  return {
+    id: index,
+    modifiedSince: index + "S",
+    title: setTitleWith(index),
+    summary: makeSummaryWith(setTitleWith(index), summary),
+    pinned: index % 2 === 0,
+    // @todo: render only if index % 3 === 0
+    thumbnailUri: makeThumbnailListWith(index),
+  };
+});
