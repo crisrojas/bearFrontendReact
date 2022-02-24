@@ -1,5 +1,6 @@
 const Colors = {
   background: "rgba(250, 248, 245, 1.0)",
+  background90: "rgba(250, 248, 245, 0.9)",
   backgroundSearch: "rgba(250, 248, 245, 1.0)",
   textBaseColor: "rgba(75, 53, 8, 1.00)",
   titleTextColor: "rgba(99, 90, 71, 1.00)",

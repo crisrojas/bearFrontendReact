@@ -16,6 +16,7 @@ const ThumbnailView = (props) => {
     <HStack style={{ marginTop: 12 }}>
       {props.uris.map((uri, index) => (
         <Image
+          key={index}
           style={styles.thumbnail}
           source={{
             uri: uri,
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
   },
   noteTitle: {
     paddingRight: 50,
+    lineHeight: 18, // @todo: abstract to App container
   },
   lastTimeLabel: {
     marginTop: 3,
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   summary: {
     marginTop: 12,
     paddingRight: 50,
+    lineHeight: 18, // @todo: abstract to App container
   },
   contentStack: {
     marginLeft: 8,
