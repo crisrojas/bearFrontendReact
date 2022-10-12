@@ -27,11 +27,55 @@ const Header = (props) => {
         <Spacer />
         <HeaderLabel>Notes</HeaderLabel>
         <Spacer />
-        <MaginfyIcon onPress={props.onSearchPress} />
+        <MagnifyComponent>
+          <MagnifyInversed>
+            <MaginifyBackground height={props.scrollOffset} />
+            <MaginfyIcon color={"white"} onPress={props.onSearchPress} />
+          </MagnifyInversed>
+          <MagnifyRegular>
+            <MaginfyIcon onPress={props.onSearchPress} />
+          </MagnifyRegular>
+        </MagnifyComponent>
       </HStack>
     </HeaderWrapper>
   );
 };
+
+const MagnifyComponent = styled.View`
+  position: relative;
+  /* display: flex; */
+  justify-content: center;
+  /* align-items: center; */
+  /* border-radius: 15px; */
+  width: 30px;
+  height: 30px;
+  /* padding: 6px; */
+  overflow: hidden;
+`;
+
+const MagnifyRegular = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+const MagnifyInversed = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const MaginifyBackground = styled.View`
+  position: absolute;
+  background: ${Colors.searchFieldFocusedColor};
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: ${(props) => (props.height ? props.height + "%" : 0 + "%")};
+`;
 
 const HeaderWrapper = styled.View`
   padding: 20px 12px;

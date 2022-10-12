@@ -8,12 +8,15 @@ import Header from "./header";
 import HStack from "../../UI/hstack";
 import VStack from "../../UI/vstack";
 import SearchStack from "./searchstack";
+import { propsFlattener } from "native-base/lib/typescript/hooks/useThemeProps/propsFlattener";
 
 const NotesList = () => {
   // State
   const [selectedId, setSelectedId] = useState(0);
   const [showSearch, setShowSearch] = useState(false);
   const [searchText, onChangeSearchText] = useState("");
+  const [scrolledToTop, setScrolledToTop] = useState(false);
+  const [scrollOffset, setScrollOffset] = useState(0);
 
   const didSelectNote = () => {
     /* @todo: Fetch & show note content from id */
@@ -30,8 +33,22 @@ const NotesList = () => {
   }, [selectedId]);
 
   const handleScroll = (event) => {
-    console.log(event.nativeEvent.contentOffset.y);
-    if (event.nativeEvent.contentOffset.y === 0) {
+    const offset = event.nativeEvent.contentOffset.y;
+    const scrolledToTopEnough = offset < -100;
+
+    setScrolledToTop(scrolledToTopEnough);
+
+    const scrolledToTop = offset < 0;
+
+    if (scrolledToTop) {
+      const absOffset = Math.abs(offset);
+      setScrollOffset(absOffset);
+      console.log(absOffset);
+    }
+  };
+
+  const handleScrollEnd = () => {
+    if (scrolledToTop) {
       setShowSearch(true);
     }
   };
@@ -39,11 +56,14 @@ const NotesList = () => {
   return (
     <View style={styles.wrapper}>
       <ScrollView
+        scrollEventThrottle={16}
+        onScrollEndDrag={handleScrollEnd}
         onScroll={handleScroll}
         showsVerticalScrollIndicator={false}
         style={styles.container}
       >
         <Header
+          scrollOffset={scrollOffset}
           length={model.length}
           onSearchPress={() => setShowSearch(true)}
         />
